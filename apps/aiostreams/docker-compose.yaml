@@ -21,10 +21,10 @@ services:
       - ./data:/app/data:Z
       
     # Resource constraints to keep the Pi 5 stable
-    deploy:
-      resources:
-        limits:
-          memory: 512M
+    #deploy:
+    #  resources:
+    #    limits:
+    #      memory: 512M
     #labels:
     #  - "traefik.enable=true"
     #  - "traefik.http.routers.aiostreams.rule=Host(`aiostreams.example.com`)"
