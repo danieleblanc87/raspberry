@@ -13,7 +13,6 @@ services:
     
     env_file:
       - .env
-    
     #environment:
       
     volumes:
@@ -25,7 +24,9 @@ services:
     #  resources:
     #    limits:
     #      memory: 512M
-    #labels:
+    labels:
+      - "io.containers.autoupdate=image" # Enable auto-update for the container for Podman
+      - "io.containers.autoupdate.rollback=1" # Rollback to previous image if update fails
     #  - "traefik.enable=true"
     #  - "traefik.http.routers.aiostreams.rule=Host(`aiostreams.example.com`)"
     #  - "traefik.http.routers.aiostreams.entrypoints=websecure"
