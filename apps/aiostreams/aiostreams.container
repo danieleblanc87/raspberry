@@ -1,0 +1,236 @@
+[Unit]
+Description=AIOStreams Service
+# Wait for the network to be ready before starting the container
+After=network-online.target
+
+[Container]
+# Official image from GitHub Container Registry
+Image=ghcr.io/viren070/aiostreams:latest
+ContainerName=aiostreams
+
+# Port mapping: host 3000 to container 3000
+PublishPort=3000:3000
+
+# Volume mapping using the %h specifier for the home directory
+# This automatically expands to /home/youruser/
+Volume=%h/devops/raspberry/apps/aiostreams/data:/app/data:Z
+
+# --- Exploded Environment Variables ---
+# Each variable is declared individually as requested
+EnvironmentFile=%h/devops/raspberry/apps/aiostreams/.env
+#Environment=SECRET_KEY=your_secret_key_here
+#Environment=BASE_URL=http://your-raspberry-ip:3000
+#Environment=PORT=3000
+# Add any other variables from your .env here
+# Environment=ANOTHER_VAR=value
+# Addon Identification
+Environment=ADDON_NAME=AIOStreams
+Environment=ADDON_ID=AIOStream_ID
+
+# Network Configuration
+Environment=PORT=3000
+Environment=BASE_URL=http://192.168.1.100:${PORT}
+
+# Security
+Environment=SECRET_KEY=c874b7930ec4ef4d364117472e88030d26539089e59032578ff3af638f96b761
+Environment=ADDON_PASSWORD=
+
+# Database
+Environment=DATABASE_URI=sqlite://./data/db.sqlite
+
+# Built-in Addon Configuration
+Environment=BUILTIN_STREMTHRU_URL=https://stremthru.13377001.xyz
+Environment=BUILTIN_SCRAPE_WITH_ALL_TITLES=false
+Environment=BUILTIN_DEBRID_INSTANT_AVAILABILITY_CACHE_TTL=1800
+Environment=BUILTIN_DEBRID_PLAYBACK_LINK_CACHE_TTL=3600
+Environment=BUILTIN_DEBRID_LIBRARY_CACHE_TTL=300
+Environment=BUILTIN_DEBRID_USE_TORRENT_DOWNLOAD_URL=true
+Environment=BUILTIN_GET_TORRENT_TIMEOUT=5000
+Environment=BUILTIN_GET_TORRENT_CONCURRENCY=100
+Environment=BUILTIN_MINIMUM_BACKGROUND_REFRESH_INTERVAL=86400
+
+# Prowlarr
+Environment=BUILTIN_PROWLARR_SEARCH_CACHE_TTL=604800
+Environment=BUILTIN_PROWLARR_INDEXERS_CACHE_TTL=1209600
+
+# GDrive
+Environment=BUILTIN_GDRIVE_PAGE_SIZE_LIMIT=1000
+
+# TorBox Search
+Environment=BUILTIN_TORBOX_SEARCH_SEARCH_API_TIMEOUT=30000
+Environment=BUILTIN_TORBOX_SEARCH_CACHE_PER_USER_SEARCH_ENGINE=false
+
+# *znab (Torznab/Newznab)
+Environment=BUILTIN_NAB_SEARCH_TIMEOUT=30000
+Environment=BUILTIN_NAB_SEARCH_CACHE_TTL=604800
+Environment=BUILTIN_NAB_CAPABILITIES_CACHE_TTL=1209600
+Environment=BUILTIN_NAB_MAX_PAGES=5
+
+# Zilean
+Environment=BUILTIN_ZILEAN_URL=https://zileanfortheweebs.midnightignite.me
+
+# AnimeTosho
+Environment=BUILTIN_ANIMETOSHO_URL=https://feed.animetosho.org
+
+# NekoBT
+Environment=BUILTIN_NEKOBT_URL=https://nekobt.to/api/torznab
+
+# SeaDex
+Environment=BUILTIN_SEADEX_URL=https://releases.moe
+
+# Anime Database
+Environment=ANIME_DB_LEVEL_OF_DETAIL=required
+Environment=ANIME_DB_FRIBB_MAPPINGS_REFRESH_INTERVAL=86400000
+Environment=ANIME_DB_MANAMI_DB_REFRESH_INTERVAL=604800000
+Environment=ANIME_DB_KITSU_IMDB_MAPPING_REFRESH_INTERVAL=86400000
+Environment=ANIME_DB_EXTENDED_ANITRAKT_MOVIES_REFRESH_INTERVAL=86400000
+Environment=ANIME_DB_EXTENDED_ANITRAKT_TV_REFRESH_INTERVAL=86400000
+
+# TMDB and Trakt
+Environment=TMDB_ACCESS_TOKEN=
+Environment=TMDB_API_KEY=
+Environment=FETCH_TRAKT_ALIASES=true
+Environment=TRAKT_CLIENT_ID=
+
+# Debrid Services - Real-Debrid
+Environment=DEFAULT_REALDEBRID_API_KEY=
+Environment=FORCED_REALDEBRID_API_KEY=
+
+# Debrid Services - AllDebrid
+Environment=DEFAULT_ALLDEBRID_API_KEY=
+Environment=FORCED_ALLDEBRID_API_KEY=
+
+# Debrid Services - Premiumize
+Environment=DEFAULT_PREMIUMIZE_API_KEY=
+Environment=FORCED_PREMIUMIZE_API_KEY=
+
+# Debrid Services - Debrid-Link
+Environment=DEFAULT_DEBRIDLINK_API_KEY=
+Environment=FORCED_DEBRIDLINK_API_KEY=
+
+# Debrid Services - Torbox
+Environment=DEFAULT_TORBOX_API_KEY=
+Environment=FORCED_TORBOX_API_KEY=
+
+# Debrid Services - OffCloud
+Environment=DEFAULT_OFFCLOUD_API_KEY=
+Environment=FORCED_OFFCLOUD_API_KEY=
+Environment=DEFAULT_OFFCLOUD_EMAIL=
+Environment=FORCED_OFFCLOUD_EMAIL=
+Environment=DEFAULT_OFFCLOUD_PASSWORD=
+Environment=FORCED_OFFCLOUD_PASSWORD=
+
+# Debrid Services - Put.io
+Environment=DEFAULT_PUTIO_CLIENT_ID=
+Environment=FORCED_PUTIO_CLIENT_ID=
+Environment=DEFAULT_PUTIO_CLIENT_SECRET=
+Environment=FORCED_PUTIO_CLIENT_SECRET=
+
+# Debrid Services - EasyNews
+Environment=DEFAULT_EASYNEWS_USERNAME=
+Environment=FORCED_EASYNEWS_USERNAME=
+Environment=DEFAULT_EASYNEWS_PASSWORD=
+Environment=FORCED_EASYNEWS_PASSWORD=
+
+# Debrid Services - EasyDebrid
+Environment=DEFAULT_EASYDEBRID_API_KEY=
+Environment=FORCED_EASYDEBRID_API_KEY=
+
+# Debrid Services - Debrider
+Environment=DEFAULT_DEBRIDER_API_KEY=
+Environment=FORCED_DEBRIDER_API_KEY=
+
+# Debrid Services - PikPak
+Environment=DEFAULT_PIKPAK_EMAIL=
+Environment=FORCED_PIKPAK_EMAIL=
+Environment=DEFAULT_PIKPAK_PASSWORD=
+Environment=FORCED_PIKPAK_PASSWORD=
+
+# Debrid Services - Seedr
+Environment=DEFAULT_SEEDR_ENCODED_TOKEN=
+Environment=FORCED_SEEDR_ENCODED_TOKEN=
+
+# Customization & Access Control
+Environment=CUSTOM_HTML=
+Environment=ALTERNATE_DESIGN=false
+Environment=REGEX_FILTER_ACCESS=trusted
+Environment=SEL_SYNC_ACCESS=trusted
+
+# Cache Configuration
+Environment=DEFAULT_MAX_CACHE_SIZE=100000
+Environment=PROXY_IP_CACHE_TTL=900
+Environment=MANIFEST_CACHE_TTL=21600
+Environment=SUBTITLE_CACHE_TTL=300
+Environment=STREAM_CACHE_TTL=-1
+Environment=CATALOG_CACHE_TTL=300
+Environment=META_CACHE_TTL=300
+Environment=ADDON_CATALOG_CACHE_TTL=300
+Environment=RPDB_API_KEY_VALIDITY_CACHE_TTL=604800
+
+# Feature Control
+Environment=DISABLE_SELF_SCRAPING=true
+
+# Logging
+Environment=LOG_LEVEL=http
+Environment=LOG_FORMAT=text
+Environment=LOG_SENSITIVE_INFO=true
+Environment=LOG_TIMEZONE=Etc/UTC
+
+# Stream Proxy Configuration
+Environment=DEFAULT_PROXY_ID=mediaflow
+Environment=FORCE_PROXY_DISABLE_PROXIED_ADDONS=false
+Environment=ENCRYPT_MEDIAFLOW_URLS=true
+Environment=ENCRYPT_STREMTHRU_URLS=true
+
+# Advanced Configuration
+Environment=DEFAULT_TIMEOUT=7000
+Environment=MAX_ADDONS=15
+Environment=MAX_GROUPS=20
+Environment=MAX_KEYWORD_FILTERS=30
+Environment=MAX_STREAM_EXPRESSIONS=200
+Environment=MAX_STREAM_EXPRESSIONS_TOTAL_CHARACTERS=50000
+Environment=MAX_SEL_LENGTH=3000
+Environment=MAX_FORMATTER_TEMPLATE_LENGTH=5000
+Environment=MAX_TIMEOUT=50000
+Environment=MIN_TIMEOUT=1000
+Environment=PRECACHE_NEXT_EPISODE_MIN_INTERVAL=86400
+
+# Rate Limiting
+Environment=DISABLE_RATE_LIMITS=false
+Environment=STATIC_RATE_LIMIT_WINDOW=5
+Environment=STATIC_RATE_LIMIT_MAX_REQUESTS=75
+Environment=USER_API_RATE_LIMIT_WINDOW=5
+Environment=USER_API_RATE_LIMIT_MAX_REQUESTS=5
+Environment=STREAM_API_RATE_LIMIT_WINDOW=5
+Environment=STREAM_API_RATE_LIMIT_MAX_REQUESTS=10
+Environment=FORMAT_API_RATE_LIMIT_WINDOW=5
+Environment=FORMAT_API_RATE_LIMIT_MAX_REQUESTS=30
+Environment=CATALOG_API_RATE_LIMIT_WINDOW=5
+Environment=CATALOG_API_RATE_LIMIT_MAX_REQUESTS=5
+Environment=ANIME_API_RATE_LIMIT_WINDOW=60
+Environment=ANIME_API_RATE_LIMIT_MAX_REQUESTS=120
+Environment=STREMIO_STREAM_RATE_LIMIT_WINDOW=15
+Environment=STREMIO_STREAM_RATE_LIMIT_MAX_REQUESTS=10
+Environment=STREMIO_CATALOG_RATE_LIMIT_WINDOW=5
+Environment=STREMIO_CATALOG_RATE_LIMIT_MAX_REQUESTS=30
+Environment=STREMIO_MANIFEST_RATE_LIMIT_WINDOW=5
+Environment=STREMIO_MANIFEST_RATE_LIMIT_MAX_REQUESTS=5
+Environment=STREMIO_SUBTITLE_RATE_LIMIT_WINDOW=5
+Environment=STREMIO_SUBTITLE_RATE_LIMIT_MAX_REQUESTS=10
+Environment=STREMIO_META_RATE_LIMIT_WINDOW=5
+Environment=STREMIO_META_RATE_LIMIT_MAX_REQUESTS=15
+
+# Inactive User Pruning
+Environment=PRUNE_INTERVAL=86400
+Environment=PRUNE_MAX_DAYS=-1
+
+# Enable auto-updates via the registry
+AutoUpdate=registry
+
+[Service]
+# Standard restart policy for always-on services
+Restart=always
+
+[Install]
+# Pull this unit into the default start target
+WantedBy=default.target
